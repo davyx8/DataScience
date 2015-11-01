@@ -29,6 +29,7 @@ objects=[]
 scores={}
 for l in readGz("/tmp/train.json.gz"):
   inter[l['reviewerID']]=0
+  sizes[l['reviewerID']]=0
   ratings.append((l['reviewerID'], l['itemID'], l['rating']))
   nUser[l['reviewerID']] += 1
   nItem[l['itemID']] += 1
@@ -44,19 +45,27 @@ for l in readGz("/tmp/train.json.gz"):
 
 
 
-
-print("The jaccard similarity is:")
+print(objects)
+print("The jaccard of U229891973 and U622491081:")
 print(jacCalc(ratingsA,ratingsB))
 maxJac=0
 
 for tmp in ratings:
-	sizes[tmp[0]]=+1
+	sizes[tmp[0]]=sizes[tmp[0]]+1
 	if (tmp[1] in objects):
-		inter[tmp[1]]=+1
+		inter[tmp[0]]=inter[tmp[0]]+1
+
 	scores[tmp[0]]=float(inter[tmp[0]])/sizes[tmp[0]]
+for i in inter:
+	if inter[i]>0:
+		print(inter[i])
+
+for i in scores:
+	if scores[i]>0:
+		print(i)
+		print(scores[i])
 
 
-print(scores)
 
 
 
