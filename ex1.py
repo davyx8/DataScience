@@ -1,17 +1,7 @@
 import gzip
 import math
-
-
-
 from collections import defaultdict
 from random import random
-def median(l):
-    half = len(l) // 2
-    l.sort()
-    print(l)
-    if not len(l) % 2:
-        return (l[half - 1] + l[half]) / 2.0
-    return l[half]
 nUser = defaultdict(int)
 nItem = defaultdict(int)
 def readGz(f):
@@ -130,24 +120,3 @@ for i in cosinescores:
 		print i
 
 
-#suggestion for helpful calculation
-# number of (helpful ratio*min(1, #number of rate/average number of rates)
-hlpVec=[0]*len(ratings)
-hlpScore=[0]*len(ratings)
-i=0
-for hlp in helpful :
-	hlpVec[i]=hlp['outOf']
-	hlpScore[i]=hlp['nHelpful']/float(hlp['outOf'])
-	i+=1
-
-
-average=sum(hlpVec)/float(len(hlpVec))
-print(average)
-
-
-for x in range(len(hlpScore)):
-	print(hlpScore[x]*min(1,hlpVec[x]/float(average)) )
-
-	hlpScore[x]=hlpScore[x]*min(1,hlpVec[x]/float(average)) 
-
-print(hlpScore)
