@@ -8,7 +8,7 @@ def readGz(f):
 
 helpful=[]
 ratings=[]
-for l in readGz("/cs/stud/davyx8/.++/train.json.gz"):
+for l in readGz("train.json.gz"):
   ratings.append((l['reviewerID'], l['itemID'], l['rating']))
   helpful.append(l['helpful'])
 

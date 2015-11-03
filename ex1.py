@@ -43,7 +43,7 @@ cosinescores={}
 helpful=[]
 maxJac=0
 idx=0
-for l in readGz("/cs/stud/davyx8/.++/train.json.gz"):
+for l in readGz("train2.json.gz"):
   inter[l['reviewerID']]=0
   sizes[l['reviewerID']]=0
   longRating[l['reviewerID']]={}
@@ -68,10 +68,10 @@ print(jacCalc(ratingsA,ratingsB))
 
 for tmp in ratings:
 	sizes[tmp[0]]=sizes[tmp[0]]+1
+	
 	if (tmp[1] in objects):
 		inter[tmp[0]]=inter[tmp[0]]+1
 		longRating[tmp[0]].update({tmp[1]:tmp[2]})
-		
 	# jacc score calc, (inters/unifi)
 	#i didnt use the function cause it was easier this way
 	scores[tmp[0]]=float(inter[tmp[0]])/(sizes[tmp[0]]+len(objects)-inter[tmp[0]])
@@ -95,25 +95,31 @@ for x in (objects2):
 	scoresvec[i]=objects2[i][1]
 	i=i+1
 
-tmpvec=[0]*len(objects2)
 for tmp in longRating:
-
+	tmpvec=[0]*len(objects2)
 	for i in longRating[tmp]:
 		idx=vec.index(i)
 		tmpvec[idx]=longRating[tmp][i]
 	try:
+	#if(sum(tmpvec))>0:
+			#print(tmpvec)
 		cosinescores[tmp]=cosine_similarity(tmpvec,scoresvec)
 		#print(cosine_similarity(tmpvec,scoresvec))
 	except ZeroDivisionError:
 		cosinescores[tmp]=0
 	if(tmp=='U229891973'):
 		print("The cosine similarity of U229891973 and U622491081:")
+		#print(tmpvec)
 		print(cosine_similarity(tmpvec,scoresvec))
+	if(tmp=='U622491081'):
+		cosinescores[tmp]=0
 
 maxcos=0
 for i in cosinescores:
 	if cosinescores[i]>maxcos:
 		maxcos=cosinescores[i]
+print("The highest cosine score is:")
+print(maxcos)
 print("Users with highest  cosine score")
 for i in cosinescores:
 	if cosinescores[i]==maxcos:

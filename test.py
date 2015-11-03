@@ -7,6 +7,6 @@ def readGz(f):
     yield eval(l)
 
 
-for l in readGz("/tmp/train.json.gz"):
+for l in readGz("train.json.gz"):
 	if (l['reviewerID'] == 'U300899166'):
   		print(l['itemID'])
