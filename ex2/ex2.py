@@ -66,7 +66,7 @@ for cliques in cliques4:
     communities.add(cliques)
     result_communities.add(cliques)
 
-
+'''
 print("finding communities")
 while not done:
 
@@ -95,7 +95,7 @@ while not done:
 print("Number of communities: " + str(len(result_communities)))
 for t in result_communities:
     print("nodes in the community: \n" + str(t))
- 
+ '''
 G2 = nx.Graph()
 
 
@@ -118,13 +118,12 @@ def splitter(A):
     return (B,C)
 
 B,C=splitter(sortedarr)
+print(B)
+print(C)
 G2=G.subgraph(sortedarr)
 nx.draw(G2)
 
-for e in edges:
-  x,y = e[0],e[1]
-  x = int(x)
-  y = int(y)
+
 
   #if( (x in  B)  or (y in C )):
    # G2.add_edge(x,y)
@@ -138,7 +137,6 @@ def normalized_cut_cost(first, second, edges, largest_connected_component):
       edge_num += 1
   degree_first = sum(list(largest_connected_component.degree(first).values()))
   degree_second = sum(list(largest_connected_component.degree(second).values()))
-  #print degree_first, degree_second
   result = (float(edge_num) / float(degree_first) + float(edge_num) / float(degree_second)) / 2.0
   return result
 
@@ -150,10 +148,10 @@ plt.show()
 plt.clf()
 print('the initial normalized cut is: ')
 print(normalized_cut_cost(B,C,G2.edges(),G2))
-#print(G2.edges())
+
 print(len(sortedarr))
 print(len(nodes))
-
+minscore=9
 print("Q8b")
 cnt=0
 scores={}
@@ -161,32 +159,35 @@ while(True):
   scores={}
   cnt=cnt+1
   for i in B:
+
     B.remove(i)
     C.append(i)
     score=normalized_cut_cost(B,C,G2.edges(),G2)
     scores[i]=score
     C.remove(i)
     B.append(i)
-
   for i in C:
     C.remove(i)
     B.append(i)
     score=normalized_cut_cost(B,C,G2.edges(),G2)
-    scores[i]=scores
+    scores[i]=score
     B.remove(i)
     C.append(i)
-  key, value = max(scores.iteritems(), key=lambda x:x[1])
-  if (value>maxscore):
-    maxscore=value
+  z=min(scores.iterkeys(), key=(lambda k: scores[k]))
+  key=z
+  value=scores[z]
+  #key, value = max(scores.iteritems(), key=lambda x:x[1])
+  if (value<minscore):
+    minscore=value
   else:
     break
   if key in B:
     B.remove(key)
     C.append(key)
   if key in C:
-    C.remove(i)
-    B.append(i)
+    C.remove(key)
+    B.append(key)
 
 print('normalized cut after running:')
-print(value)
+print(minscore)
 
