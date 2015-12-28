@@ -66,7 +66,7 @@ for cliques in cliques4:
     communities.add(cliques)
     result_communities.add(cliques)
 
-'''
+
 print("finding communities")
 while not done:
 
@@ -95,7 +95,7 @@ while not done:
 print("Number of communities: " + str(len(result_communities)))
 for t in result_communities:
     print("nodes in the community: \n" + str(t))
- '''
+ 
 G2 = nx.Graph()
 
 
@@ -118,8 +118,7 @@ def splitter(A):
     return (B,C)
 
 B,C=splitter(sortedarr)
-print(B)
-print(C)
+
 G2=G.subgraph(sortedarr)
 nx.draw(G2)
 
@@ -190,4 +189,9 @@ while(True):
 
 print('normalized cut after running:')
 print(minscore)
+print('sets:')
+print(B)
+print(C)
+
+
 
